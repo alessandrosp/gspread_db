@@ -32,9 +32,9 @@ users.insert({'Username': 'annoys_parrot', 'Email': 'not-my-email@email.com'})
 alessandro = users.select('Username', 'annoys_parrot')
 ```
 
-Note that select operations return pd.DataFrame by default. This can be changed by setting the as_pandas argument to False.
+Note that `select` operations return pd.DataFrame by default. This can be changed by setting the `as_pandas` argument to `False`.
 
-It's important to note the header of the table (i.e. first row of the spreadsheet) is not just an aesthetic element. If you we try to insert a new record with fields that are not contained in the header the operation will fail.
+It's important to note the header of the table (i.e. first row of the spreadsheet) is not just an aesthetic element. If we try to insert a new record with fields that are not contained in the header the operation will fail.
 
 ```python
 >>> _ = users.select(limit=1)
