@@ -30,12 +30,6 @@ class RecordError(GSpreadDbError):
     """Raised when there's an issue with a specific record."""
 
 
-def authorize(credentials, client_class=gspread.client.Client):
-    """Login to Google API using OAuth2 credentials."""
-    client = gspread.authorize(credentials, client_class)
-    return Client(client.auth, client.session)
-
-
 class Database(gspread.models.Spreadsheet):
 
     def __getitem__(self, table_name):
