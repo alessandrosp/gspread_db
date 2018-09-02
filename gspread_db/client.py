@@ -1,6 +1,6 @@
 import gspread
 
-from gspread_db import Database
+from .models import Database
 
 
 class Client(gspread.Client):
