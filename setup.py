@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gspread_db",
-    version="1.0",
+    version="1.1",
     author="Alessandro Scoccia Pappagallo",
     author_email="aless@ndro.xyz",
     classifiers=[
