@@ -137,7 +137,7 @@ class Table(gspread.models.Worksheet):
                 value = record[self.idx_map[idx]]
             except KeyError:
                 value = ''
-                output.append(value)
+            output.append(value)
         return output
 
     def _record_matches_conditions(self, record, conditions):
