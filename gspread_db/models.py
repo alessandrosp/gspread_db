@@ -166,7 +166,7 @@ class Table(gspread.models.Worksheet):
                     'Fields in conditions must be in table\'s header.')
             if not operator(record[self.fields_map[field]], compared):
                 return False
-            return True
+        return True
 
     def delete(self, field=None, value=None, row_numbers=None, where=None):
         """Deletes all records that match certian conditions.
