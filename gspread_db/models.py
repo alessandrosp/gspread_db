@@ -2,7 +2,7 @@
 
 import operator
 
-import gspread
+from gspread import Spreadsheet, Worksheet, Cell
 import pandas as pd
 
 
@@ -30,7 +30,7 @@ class RecordError(GSpreadDbError):
     """Raised when there's an issue with a specific record."""
 
 
-class Database(gspread.models.Spreadsheet):
+class Database(Spreadsheet):
 
     def __getitem__(self, table_name):
         """Gets the relevant worksheet and returns it as a Table object."""
@@ -67,7 +67,7 @@ class Database(gspread.models.Spreadsheet):
         return False
 
 
-class Table(gspread.models.Worksheet):
+class Table(Worksheet):
 
     def _parse_header(self):
         """Parses the header of the Table.
@@ -279,6 +279,8 @@ class Table(gspread.models.Worksheet):
             where = [where]
         elif field:
             where = [(field, 'eq', value)]
+        else:
+            where = []
 
         results = []
         row_numbers = []
@@ -337,9 +339,14 @@ class Table(gspread.models.Worksheet):
                 if self._record_matches_conditions(record, where):
                     row_numbers.append(row_number)
 
+            cell_list = []
             for row_number in row_numbers:
                 for field_to_update, new_value in new_values.items():
                     # fields_map is 0-based, while coordinates are passed
                     # as 1-based values, thus the +1.
                     col_number = self.fields_map[field_to_update] + 1
-                    self.update_cell(row_number, col_number, new_value)
+                    cell = Cell(row_number, col_number, new_value)
+                    cell_list.append(cell)
+            if len(cell_list) > 0:
+                cell_list.sort(key=lambda x: (x.row, x.col))
+                self.update_cells(cell_list)
